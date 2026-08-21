@@ -1,0 +1,4 @@
+[profile.default]
+src = "demos"
+out = "out"
+libs = []
