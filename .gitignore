@@ -1,0 +1,6 @@
+# compiled artifacts
+out/
+cache/
+*.pyc
+__pycache__/
+.DS_Store
