@@ -1,0 +1,2 @@
+slither-analyzer>=0.10.0
+# requires Foundry (forge) for compiling sol 0.8.19+ projects
