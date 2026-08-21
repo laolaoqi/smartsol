@@ -1,0 +1,35 @@
+name: Smartsol Audit
+
+on:
+  pull_request:
+    paths: ['**/*.sol']
+  workflow_dispatch:
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Install Foundry
+        uses: foundry-rs/foundry-toolchain@v1
+
+      - name: Install Slither
+        run: pip install slither-analyzer
+
+      - name: Run Smartsol
+        env:
+          SMARTSOL_API_KEY: ${{ secrets.SMARTSOL_API_KEY }}
+        run: |
+          pip install -r requirements.txt
+          python3 smartsol.py scan ./contracts --json > smartsol-report.json 2>smartsol.log || true
+
+      - name: Upload report
+        uses: actions/upload-artifact@v4
+        with:
+          name: smartsol-audit-report
+          path: |
+            smartsol-report.json
+            smartsol.log
