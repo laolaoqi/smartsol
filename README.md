@@ -98,6 +98,34 @@ LLM 提示词约束它**只返回结构化 JSON**，结果稳定可解析。
 
 ---
 
+## CI 集成（GitHub Action）
+
+把 AI 审计直接接进你的 PR 流程，提交 `.sol` 的 PR 自动触发审计：
+
+```yaml
+# .github/workflows/audit.yml
+name: Smartsol Audit
+on:
+  pull_request:
+    paths: ['**/*.sol']
+  workflow_dispatch:
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { submodules: recursive }
+      - uses: foundry-rs/foundry-toolchain@v1
+      - run: pip install slither-analyzer && pip install -r requirements.txt
+        env:
+          SMARTSOL_API_KEY: ${{ secrets.SMARTSOL_API_KEY }}
+      - run: python3 smartsol.py scan ./contracts --json > report.json
+```
+
+完整示例在 [`.github/workflows/audit.yml`](.github/workflows/audit.yml)。仓库设置里加一个 `SMARTSOL_API_KEY` secret 即可。
+
+---
+
 ## Demo 合约（自包含，无外部依赖）
 
 `demos/` 里的合约故意包含真实漏洞，作为工具的自测套件：
