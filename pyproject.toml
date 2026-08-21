@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "smartsol"
+version = "0.1.0"
+description = "AI-powered smart contract audit in one command. Strips Slither noise and ranks real vulnerabilities with exploit paths and fixes."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+authors = [{ name = "laolaoqi" }]
+keywords = ["smart-contract", "security", "audit", "solidity", "defi", "slither", "ai"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Topic :: Security",
+]
+dependencies = []
+
+[project.urls]
+Homepage = "https://github.com/laolaoqi/smartsol"
+Repository = "https://github.com/laolaoqi/smartsol"
+
+[project.scripts]
+smartsol = "smartsol.cli:main"
+
+[tool.setuptools]
+packages = ["smartsol"]
